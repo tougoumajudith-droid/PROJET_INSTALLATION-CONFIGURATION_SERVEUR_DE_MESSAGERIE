@@ -192,4 +192,16 @@ Les fonctionnalités de l'infrastructure sont validées à travers différents s
 - Vérification des stratégies d'accès mobile.
 - Validation de la sauvegarde de la base de données.
 
+## Problèmes rencontrés
+
+| # | Problème | Cause | Solution |
+|---|----------|-------|----------|
+| 1 | L'installation d'Exchange 2019 échoue à répétition à l'étape du rôle Hub Transport avec l'erreur `ManagementObjectNotFoundException` : l'objet `Exchange23.contoso23.com` est introuvable sur `DC23.contoso23.com` | Enregistrement DNS incorrect pour le serveur Exchange. Le programme d'installation ne pouvait ni créer ni trouver l'objet du serveur dans Active Directory sur DC23 | Retrait du serveur Exchange du domaine, correction de l'enregistrement DNS, nouvelle jonction au domaine, puis relance de l'installation |
+
+### Détails du problème 1
+- **Message d'erreur :** `The operation couldn't be performed because object 'Exchange23.contoso23.com' couldn't be found on 'DC23.contoso23.com'`
+- **Commande en échec :** `set-ExchangeServerRole -IsHubTransportServer:$true -DomainController DC23.contoso23.com`
+- **Comment j'ai confirmé le problème :** vérification de la résolution DNS avec `nslookup` et contrôle de l'existence de l'objet du serveur Exchange dans AD
+- **Résultat :** après la correction du DNS et la nouvelle jonction au domaine, l'installation a pu enregistrer l'objet du serveur dans AD et poursuivre
+
 
