@@ -8,6 +8,9 @@ L'objectif est de mettre en place une infrastructure centralisée permettant la 
 
 Le projet couvre également l'administration avancée d'Exchange Management Shell (EMS), la gestion des autorisations RBAC, la configuration des protocoles de messagerie et la sauvegarde des bases de données.
 
+##Cadre du projet
+Ce projet est academique et realisé pour le cours sur le serveur de messagerie Exchange.
+
 ## 1. Architecture de l'infrastructure
 
 L'environnement est constitué de deux machines virtuelles Windows Server 2022 déployées sous VMware.
