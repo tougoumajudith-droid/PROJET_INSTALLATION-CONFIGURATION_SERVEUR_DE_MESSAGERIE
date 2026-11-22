@@ -153,8 +153,3 @@ Get-AddressBookPolicy "IT_ABP" | fl Name,AddressLists,OfflineAddressBook,GlobalA
 
 ---
 
-## Tâche 3 : Windows Server Backup
-
-**Énoncé :** installer la fonctionnalité Windows Server Backup sur Exchange23 et effectuer une sauvegarde de la base de données de boîtes aux lettres DB23.
-
-_À compléter après le lab._
