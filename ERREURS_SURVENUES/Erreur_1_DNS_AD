@@ -1,12 +1,30 @@
 
 ## Problèmes rencontrés
 
-| # | Problème | Cause | Solution |
-|---|----------|-------|----------|
-| 1 | L'installation d'Exchange 2019 échoue à répétition à l'étape du rôle Hub Transport avec l'erreur `ManagementObjectNotFoundException` : l'objet `Exchange23.contoso23.com` est introuvable sur `DC23.contoso23.com` | Enregistrement DNS incorrect pour le serveur Exchange. Le programme d'installation ne pouvait ni créer ni trouver l'objet du serveur dans Active Directory sur DC23 | Retrait du serveur Exchange du domaine, correction de l'enregistrement DNS, nouvelle jonction au domaine, puis relance de l'installation |
-
 ### Détails du problème 1
-- **Message d'erreur :** `The operation couldn't be performed because object 'Exchange23.contoso23.com' couldn't be found on 'DC23.contoso23.com'`
-- **Commande en échec :** `set-ExchangeServerRole -IsHubTransportServer:$true -DomainController DC23.contoso23.com`
+- **Problème :** L'installation d'Exchange 2019 échoue à répétition à l'étape du rôle Hub Transport
+- **Message d'erreur :** `The operation couldn't be performed because object 'ExchangeX.contosoX.com' couldn't be found on 'DCX.contosoX.com'`
+- **Commande en échec :** `set-ExchangeServerRole -IsHubTransportServer:$true -DomainController DCX.contosoX.com`
 - **Comment j'ai confirmé le problème :** vérification de la résolution DNS avec `nslookup` et contrôle de l'existence de l'objet du serveur Exchange dans AD
 - **Résultat :** après la correction du DNS et la nouvelle jonction au domaine, l'installation a pu enregistrer l'objet du serveur dans AD et poursuivre
+### Détails du problème 2
+- **Problème :** impossible de configurer les profils POP3 et IMAP4 dans Outlook
+- **Cause :** incohérence entre les ports utilisés et les méthodes de chiffrement configurées
+- **Solution attendue :** vérifier les paramètres des services POP3 et IMAP4 :
+  - POP3 sécurisé : port `995` avec SSL/TLS
+  - IMAP4 sécurisé : port `993` avec SSL/TLS
+- **Vérification :** contrôle des paramètres avec les commandes `Get-PopSettings` et `Get-ImapSettings`
+### Détails du problème 3
+- **Problème :** le profil MAPI over HTTP était configuré, mais l'URL du répertoire virtuel Exchange était inaccessible
+- **Cause :** absence d'un enregistrement DNS de type A pour le nom d'hôte utilisé dans l'URL MAPI
+- **Solution :** ajout de l'enregistrement DNS A correspondant au serveur Exchange
+
+```powershell
+Add-DnsServerResourceRecordA -Name "mail" -ZoneName "contosoX.com" -IPv4Address "X.X.X.X"
+### Détails du problème 4
+- **Problème :** impossible d'envoyer des courriels vers des adresses externes, notamment Gmail.
+- **Cause :** le serveur DNS interne ne parvenait pas à résoudre les noms de domaines externes.
+- **Solution :** configuration d'un redirecteur DNS public pour permettre la résolution des domaines externes.
+
+```powershell
+Add-DnsServerForwarder -IPAddress 8.8.8.8
