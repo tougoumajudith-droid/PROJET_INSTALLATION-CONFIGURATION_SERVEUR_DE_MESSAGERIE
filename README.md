@@ -140,15 +140,7 @@ L'environnement est constitué de deux machines virtuelles Windows Server 2022 d
 - Tests d'envoi et de réception de courriels.
 - Vérification des communications entre utilisateurs via OWA.
 
-### Phase 9 - Sécurité et gestion des appareils mobiles
-
-- Configuration des paramètres d'accès Exchange ActiveSync.
-- Mise en quarantaine des nouveaux appareils mobiles.
-- Configuration des notifications destinées aux administrateurs.
-- Création de règles d'accès pour autoriser ou bloquer des appareils selon leurs caractéristiques.
-- Configuration des politiques de sécurité des appareils mobiles.
-
-### Phase 10 - Sauvegarde et restauration
+### Phase 9 - Sauvegarde et restauration
 
 - Installation de la fonctionnalité Windows Server Backup.
 - Configuration d'une sauvegarde de la base de données Exchange `DB23`.
